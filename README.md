@@ -8,7 +8,7 @@ It produces the exact same contract as
 [`testhide-pytest-plugin`](https://github.com/thuesdays/testhide-pytest-plugin): `fail_id`,
 `test_resolution`, `docstr`/`attachment`/`info`/`jira` properties, `<system-out>`, suite
 metadata, and `testhide_schema_version=1`. See the canonical spec:
-[Testhide Report Format v1](https://github.com/thuesdays/testhide/blob/main/docs/specs/REPORT-FORMAT-V1.md).
+[Testhide Report Format v1](https://testhide.com/plugins/report-format/).
 
 ## Install
 
@@ -109,7 +109,8 @@ sdist + wheel, and uploads to PyPI with `twine`.
 PYPI_API_TOKEN=pypi-...      # https://pypi.org/manage/account/token/
 ```
 
-**CI publish (GitHub Actions):** run the *Publish to PyPI* workflow (manual `workflow_dispatch`).
+**CI publish (GitHub Actions):** pushing to `main` auto-publishes (conformance gate → patch
+version bump → PyPI → GitHub Release; loop-guarded so the bump commit doesn't re-trigger).
 Required repository secret:
 - `PYPI_API_TOKEN` — PyPI API token (Settings → Secrets and variables → Actions).
 
