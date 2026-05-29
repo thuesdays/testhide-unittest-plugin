@@ -94,6 +94,25 @@ sample suite and validates the output, guaranteeing the agent will parse it:
 python conformance/validate_report.py junittests.xml
 ```
 
+## Publishing (maintainers)
+
+**Local publish (Windows):**
+```bat
+copy .env.local.example .env.local   :: then edit .env.local and add PYPI_API_TOKEN
+publish.bat
+```
+`publish.bat` loads `.env.local` (gitignored), runs the conformance tests, builds the
+sdist + wheel, and uploads to PyPI with `twine`.
+
+`.env.local`:
+```
+PYPI_API_TOKEN=pypi-...      # https://pypi.org/manage/account/token/
+```
+
+**CI publish (GitHub Actions):** run the *Publish to PyPI* workflow (manual `workflow_dispatch`).
+Required repository secret:
+- `PYPI_API_TOKEN` — PyPI API token (Settings → Secrets and variables → Actions).
+
 ## License
 
 MIT.
