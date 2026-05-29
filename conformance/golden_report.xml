@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Golden conformance fixture for Testhide Report Format v1.
+  Exercises every outcome (passed / failed / errored / skipped / xfail) and every
+  per-test property type. `validate_report.py golden_report.xml` MUST exit 0 with no errors.
+  See docs/specs/REPORT-FORMAT-V1.md.
+-->
+<testsuites>
+  <testsuite name="pytest" timestamp="2026-05-29T10:00:00Z" hostname="build-node-07"
+             tests="5" failures="2" errors="1" skipped="1" time="0.500">
+    <properties>
+      <property name="testhide_schema_version" value="1"/>
+      <property name="ip_address" value="10.0.0.7"/>
+      <property name="hostname" value="build-node-07"/>
+      <property name="build" value="1042"/>
+      <property name="branch" value="main"/>
+    </properties>
+
+    <testcase classname="pkg.module.LoginTests" name="test_login_ok"
+              file="tests/test_login.py" line="12" time="0.100"
+              fail_id="" test_resolution="Passed">
+      <properties>
+        <property name="docstr" value="User can log in with valid credentials."/>
+      </properties>
+    </testcase>
+
+    <testcase classname="pkg.module.LoginTests" name="test_login_wrong_password"
+              file="tests/test_login.py" line="20" time="0.200"
+              fail_id="3f8a1c2b9d4e5f60718293a4b5c6d7e8" test_resolution="Unresolved">
+      <failure message="AssertionError: expected status 200, got 401"><![CDATA[
+Traceback (most recent call last):
+  File "tests/test_login.py", line 24, in test_login_wrong_password
+    assert resp.status_code == 200
+AssertionError: expected status 200, got 401
+]]></failure>
+      <properties>
+        <property name="docstr" value="Wrong password must be rejected."/>
+        <property name="attachment" value="https://artifacts.example.com/builds/1042/login_fail.png"/>
+        <property name="attachment" value="/var/run/testhide/1042/login_fail.har"/>
+        <property name="info" value="{&quot;retries&quot;: 0, &quot;env&quot;: &quot;staging&quot;}"/>
+      </properties>
+      <system-out>POST /login -> 401
+[step] entered credentials
+[step] submitted form</system-out>
+    </testcase>
+
+    <testcase classname="pkg.module.ImportSuite" name="test_imports"
+              file="tests/test_imports.py" line="1" time="0.050"
+              fail_id="aa11bb22cc33dd44ee55ff6677889900" test_resolution="Collection Error">
+      <error message="ImportError: No module named 'missing_dep'"><![CDATA[
+ImportError while importing test module 'tests/test_imports.py'.
+ModuleNotFoundError: No module named 'missing_dep'
+]]></error>
+    </testcase>
+
+    <testcase classname="pkg.module.PaymentTests" name="test_refund"
+              file="tests/test_payment.py" line="55" time="0.000"
+              fail_id="" test_resolution="Skipped">
+      <skipped type="pytest.skip" message="refund API disabled in staging">tests/test_payment.py:55: refund API disabled in staging</skipped>
+    </testcase>
+
+    <testcase classname="pkg.module.PaymentTests" name="test_known_flaky"
+              file="tests/test_payment.py" line="70" time="0.150"
+              fail_id="bb22cc33dd44ee55ff6677889900aa11" test_resolution="Known Issue">
+      <failure message="Known Issue: TimeoutError waiting for gateway"><![CDATA[
+Traceback (most recent call last):
+  File "tests/test_payment.py", line 78, in test_known_flaky
+    gateway.wait()
+TimeoutError: gateway did not respond in 30s
+]]></failure>
+      <properties>
+        <property name="docstr" value="Known-flaky payment gateway timeout."/>
+        <property name="jira" value="PAY-417 Known Issue [gateway timeout under load]"/>
+      </properties>
+    </testcase>
+
+  </testsuite>
+</testsuites>

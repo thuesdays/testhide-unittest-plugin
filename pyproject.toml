@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "testhide-unittest-plugin"
+version = "0.1.0"
+authors = [
+  { name = "Mykola Kovhanko", email = "thuesdays@gmail.com" },
+]
+description = "Emit Testhide-format (JUnit-extended) test reports from Python's unittest."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = []
+
+[project.optional-dependencies]
+jira = ["jira>=3.6.0"]
+dev = ["build", "twine"]
+
+[project.urls]
+"Homepage" = "https://github.com/thuesdays/testhide-unittest-plugin"
+"Bug Tracker" = "https://github.com/thuesdays/testhide-unittest-plugin/issues"
+"Specification" = "https://github.com/thuesdays/testhide"
+
+[project.scripts]
+testhide-unittest = "testhide_unittest.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

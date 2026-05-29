@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# Testhide report output / temp
+junittests.xml
+*.xml.lock
+.*_temp/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
