@@ -1,6 +1,8 @@
 name: Publish to PyPI
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       bump:
@@ -16,7 +18,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: "github.actor != 'github-actions[bot]'"
+    # Push to main auto-publishes a patch bump; skip the bot's own bump commit to avoid a loop.
+    if: "github.actor != 'github-actions[bot]' && !contains(github.event.head_commit.message, 'chore: bump version')"
     permissions:
       contents: write
     steps:
